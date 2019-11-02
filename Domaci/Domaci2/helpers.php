@@ -14,3 +14,9 @@ function generateUrlQuery($params)
 
    return $url;
 }
+
+//funkcija koja generise href atribut za <a> tag
+function generateHref($pageName, $params)
+{
+    return $pageName . "?" . generateUrlQuery($params);
+}
