@@ -1,11 +1,16 @@
 <?php
 
+//funkcija koja generise validan URL query string
 function generateUrlQuery($params)
 {
-    return http_build_query($params,'','&');
-}
+    $url = '';
+    $keyArray = array_keys($params);
+    for($i = 0; $i < count($keyArray);$i++){
+        $url = $url . $keyArray[$i] . "=" . urlencode($params[$keyArray[$i]]);
+        if($i != count($keyArray)-1){
+            $url = $url . "&";
+        }
+    }
 
-function generateHref($pageName, $params)
-{
-    return $pageName.generateUrlQuery($params);
+   return $url;
 }
