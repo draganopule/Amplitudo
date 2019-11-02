@@ -31,3 +31,23 @@ function formatGetParams()
     $html = $html . '</ul>';
     return $html;
 }
+
+//funkcija koja provjerava da li string predstavlja validnu IP adresu
+function validateIP($address)
+{
+    $addr = explode(".", $address);
+    if(count($addr) != 4){
+        return false;
+    }
+    foreach($addr as $a){
+        if(!is_numeric($a)){
+            return false;
+        }
+        if(intval($a) < 0 || intval($a) > 255){
+            return false;
+        }
+    }
+    return true;
+}
+
+?>
