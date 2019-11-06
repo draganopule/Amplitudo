@@ -8,6 +8,14 @@ class MenuItem implements Renderable;
     private $pageName;
     private $params;
 
+    //konstruktor
+    public class __construct($label, $pageName, $params)
+    {
+        $this->label = $label;
+        $this->pageName = $pageName;
+        $this->params = $params;
+    }
+    
     //implementacija render() funkcije iz interfejsa Renderable
     public function render(): string
     {
@@ -28,7 +36,7 @@ class MenuItem implements Renderable;
 
         return $url;
     }
-    
+
     //funkcija koja generise href atribut za <a> tag
     function generateHref()
     {
