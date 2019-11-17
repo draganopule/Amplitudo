@@ -2,7 +2,7 @@
 
 namespace Amplitudo\Domaci4;
 
-require_once './HTMLRenderable.php'
+require_once './HTMLRenderable.php';
 
 class Collection implements HTMLRenderable
 {
