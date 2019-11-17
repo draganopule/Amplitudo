@@ -9,6 +9,11 @@ class Collection implements HTMLRenderable
     protected $items;
     protected $count;
 
+    public function __construct($items, $count)
+    {
+        $this->items = $items;
+        $this->$count = $count;
+    }
     protected function add($element, $position)
     {
         if($position < 0 || $position > $this->count){
