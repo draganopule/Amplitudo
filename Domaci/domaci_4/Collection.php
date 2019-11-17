@@ -2,6 +2,8 @@
 
 namespace Amplitudo\Domaci4;
 
+require_once './HTMLRenderable.php'
+
 class Collection implements HTMLRenderable
 {
     protected $items;
@@ -25,8 +27,8 @@ class Collection implements HTMLRenderable
     public function toHtml()
     {
         echo '<ul>';
-        foreach($this->items as $it){
-            echo '<li>' . $it . '</li>';
+        foreach($this->items as $item){
+            echo '<li>' . $item . '</li>';
         }
     }
 }
