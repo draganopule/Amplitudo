@@ -19,7 +19,7 @@ class Collection implements HTMLRenderable
         if($position < 0 || $position > $this->count){
             throw new CollectionOverflowException();
         }
-        $this->items[$position] = $element;
+        array_splice($this->items, $this->position, 0, $element);
     }
 
     public abstract function getIterator();
