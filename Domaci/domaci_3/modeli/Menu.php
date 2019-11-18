@@ -1,7 +1,6 @@
 <?php
-//require_once '../autoload.php';
-require_once '../interfejsi/Renderable.php';
-require_once './MenuItem.php';
+require_once './interfejsi/Renderable.php';
+require_once './modeli/MenuItem.php';
 
 class Menu implements Renderable
 {
