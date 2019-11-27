@@ -2,6 +2,10 @@
 
 namespace Amplitudo\Domaci5\Factory;
 
+/*
+Klasa Automobile koja sadrzi podatke o proizvodjacu ($make), modelu ($model),
+i godinu kad je automobil proizveden ($year)
+*/
 class Automobile
 {
     private $make;
