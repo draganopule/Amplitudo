@@ -18,5 +18,5 @@ bira posredno, na nacin sto izabere iz koje klase (fabrike) poziva funkciju crea
 $vozilo1 = MercedesFactory::create('B 180');
 $vozilo2 = BMWFactory::create('X5');
 
-echo '<h3>' . $vozilo1->__toString() . '</h3>';
-echo '<h3>' . $vozilo2->__toString() . '</h3>';
+echo '<h3>' . $vozilo1 . '</h3>';
+echo '<h3>' . $vozilo2 . '</h3>';
