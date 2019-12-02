@@ -1,0 +1,201 @@
+/*Ubacivanje podataka u tabele koje smo kreirali u fajlu sql1 */
+
+/*Polje username je definisano kao unique, pa samim tim nije moguc unos dva zapisa koja imaju istu vrijednost tog polja.
+Opcijom IGNORE omogucavamo da INSERT bude idempotentan, odnosno da u slucaju da pokusamo da unesemo dva ista zapisa, ignorisemo gresku, i dobijemo samo obavjestenje da nije nista unijeto u tabelu. 
+Ovo vazi za sve upite u kojima smo koristili INSERT IGNORE */
+
+INSERT IGNORE INTO korisnik (username, god_rodjenja, email) values
+('Marko', 1992, 'marko@gmail.com'
+);
+INSERT IGNORE INTO korisnik (username, god_rodjenja, email) values
+('Petar', 1990, 'petar@gmail.com'
+);
+INSERT IGNORE INTO korisnik (username, god_rodjenja, email) values
+('Jelena', 1995, 'jelena@gmail.com'
+);
+INSERT IGNORE INTO korisnik (username, god_rodjenja, email) values
+('Masa', 1998, 'masa@gmail.com'
+);
+
+INSERT IGNORE INTO ocjena values (1),(2),(3),(4),(5);
+
+/*Ovdje nismo mogli da koristimo INSERT IGNORE jer polje naziv potencijalno moze biti isto za dva izdavaca. Zato sam ovdje koristio select kojim provjeravam da li vec u tabeli postoji zapis sa istom vrijednoscu polja naziv. Insert se radi samo ukoliko ne postoji. Ovo vazi za sve upite u kojima smo koristili SELECT provjeru */
+INSERT INTO izdavac (naziv) 
+SELECT * FROM (SELECT 'Nova knjiga') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM izdavac WHERE naziv = 'Nova knjiga'
+);
+INSERT INTO izdavac (naziv) 
+SELECT * FROM (SELECT 'Laguna') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM izdavac WHERE naziv = 'Laguna'
+);
+INSERT INTO izdavac (naziv) 
+SELECT * FROM (SELECT 'CID') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM izdavac WHERE naziv = 'CID'
+);
+INSERT INTO izdavac (naziv) 
+SELECT * FROM (SELECT 'Unirex') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM izdavac WHERE naziv = 'Unirex'
+);
+INSERT INTO izdavac (naziv) 
+SELECT * FROM (SELECT 'Narodna knjiga') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM izdavac WHERE naziv = 'Narodna knjiga'
+);
+INSERT INTO izdavac (naziv) 
+SELECT * FROM (SELECT 'Obod') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM izdavac WHERE naziv = 'Obod'
+);
+
+INSERT INTO autor(ime, prezime) 
+SELECT * FROM (SELECT 'Dusan', 'Kovacevic') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM autor WHERE ime = 'Dusan' and prezime = 'Kovacevic'
+);
+INSERT INTO autor(ime, prezime) 
+SELECT * FROM (SELECT 'Danilo', 'Kis') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM autor WHERE ime = 'Danilo' and prezime = 'Kis'
+);
+INSERT INTO autor(ime, prezime) 
+SELECT * FROM (SELECT 'Lav', 'Tolstoj') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM autor WHERE ime = 'Lav' and prezime = 'Tolstoj'
+);
+INSERT INTO autor(ime, prezime) 
+SELECT * FROM (SELECT 'Mesa' , 'Selimovic')AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM autor WHERE ime = 'Mesa' and prezime = 'Selimovic'
+);
+INSERT INTO autor(ime, prezime) 
+SELECT * FROM (SELECT 'Ivo', 'Andric') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM autor WHERE ime = 'Ivo' and prezime = 'Andric'
+);
+
+INSERT INTO zanr(naziv) 
+SELECT * FROM (SELECT 'Drama') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM zanr WHERE naziv = 'Drama'
+);
+INSERT INTO zanr(naziv) 
+SELECT * FROM (SELECT 'Komedija') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM zanr WHERE naziv = 'Komedija'
+);
+INSERT INTO zanr(naziv) 
+SELECT * FROM (SELECT 'Roman') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM zanr WHERE naziv = 'Roman'
+);
+INSERT INTO zanr(naziv) 
+SELECT * FROM (SELECT 'Price') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM zanr WHERE naziv = 'Price'
+);
+INSERT INTO zanr(naziv) 
+SELECT * FROM (SELECT 'Pjesme') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM zanr WHERE naziv = 'Pjesme'
+);
+INSERT INTO zanr(naziv) 
+SELECT * FROM (SELECT 'Fantastika') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM zanr WHERE naziv = 'Fantastika'
+);
+INSERT INTO zanr(naziv) 
+SELECT * FROM (SELECT 'Esej') AS tmp
+WHERE NOT EXISTS (
+    SELECT * FROM zanr WHERE naziv = 'Esej'
+);
+
+INSERT ignore INTO knjiga (isbn, naziv, god_izdavanja, i_id) value
+('0123456789123', 'Profesionalac', 1982, 2) ;
+INSERT ignore INTO knjiga (isbn, naziv, god_izdavanja, i_id) value
+('0123456789124', 'Cas anatomije', 1978, 3) ;
+INSERT ignore INTO knjiga (isbn, naziv, god_izdavanja, i_id) value
+('0123456789125', 'Rat i mir', 1995, 5) ;
+INSERT ignore INTO knjiga (isbn, naziv, god_izdavanja, i_id) value
+('0123456789126', 'Na Drini cuprija', 2010, 1) ;
+INSERT ignore INTO knjiga (isbn, naziv, god_izdavanja, i_id) value
+('0123456789127', 'Tvrdjava', 2015, 4) ;
+INSERT ignore INTO knjiga (isbn, naziv, god_izdavanja, i_id) value
+('0123456789128', 'Dervis i smrt', 2002, 6) ;
+INSERT ignore INTO knjiga (isbn, naziv, god_izdavanja, i_id) value
+('0123456789129', 'Prokleta avlija', 2008, 2) ;
+INSERT ignore INTO knjiga (isbn, naziv, god_izdavanja, i_id) value
+('0123456789130', 'Najljepse price', 2008, 6) ;
+INSERT ignore INTO knjiga (isbn, naziv, god_izdavanja, i_id) value
+('0123456789131', 'Fama o biciklistima', 2000, 1) ;
+
+INSERT ignore INTO recenzija(redni_broj, tekst, k_isbn, o_vrijednost, k_id) value
+('1', 'Neki komentar o knjizi Profesionalac', '0123456789123', 4, 2);
+INSERT ignore INTO recenzija(redni_broj, tekst, k_isbn, o_vrijednost, k_id) value
+('2', 'Drugi komentar o knjizi Profesionalac', '0123456789123', 5, 4);
+INSERT ignore INTO recenzija(redni_broj, tekst, k_isbn, o_vrijednost, k_id) value
+('1', 'Neki komentar o knjizi Cas anatomije', '0123456789124', 5, 1);
+INSERT ignore INTO recenzija(redni_broj, tekst, k_isbn, o_vrijednost, k_id) value
+('1', 'Neki komentar o knjizi Tvrdjava', '0123456789127', 5, 3);
+INSERT ignore INTO recenzija(redni_broj, tekst, k_isbn, o_vrijednost, k_id) value
+('2', 'Drugi komentar o knjizi Tvrdjava', '0123456789127', 4, 4);
+INSERT ignore INTO recenzija(redni_broj, tekst, k_isbn, o_vrijednost, k_id) value
+('3', 'Treci komentar o knjizi Tvrdjava', '0123456789127', 5, 1);
+INSERT ignore INTO recenzija(redni_broj, tekst, k_isbn, o_vrijednost, k_id) value
+('1', 'Neki komentar o knjizi Na Drini cuprija', '0123456789126', 5, 2);
+INSERT ignore INTO recenzija(redni_broj, tekst, k_isbn, o_vrijednost, k_id) value
+('2', 'Drugi komentar o knjizi Na Drini cuprija', '0123456789126', 5, 4);
+
+INSERT ignore INTO iznajmljivanje(datum_iznajmljivanja, k_id, k_isbn) value
+('2019-10-23', 1, '0123456789123');
+INSERT ignore INTO iznajmljivanje(datum_iznajmljivanja, k_id, k_isbn) value
+('2018-05-14', 1, '0123456789123');
+INSERT ignore INTO iznajmljivanje(datum_iznajmljivanja, k_id, k_isbn) value
+('2018-08-05', 3, '0123456789126');
+INSERT ignore INTO iznajmljivanje(datum_iznajmljivanja, k_id, k_isbn) value
+('2019-11-01', 4, '0123456789127');
+INSERT ignore INTO iznajmljivanje(datum_iznajmljivanja, k_id, k_isbn) value
+('2018-04-17', 3, '0123456789131');
+INSERT ignore INTO iznajmljivanje(datum_iznajmljivanja, k_id, k_isbn) value
+('2019-03-05', 4, '0123456789129');
+
+INSERT ignore INTO knjiga_zanr(z_id, k_isbn) value
+(2, '0123456789123');
+INSERT ignore INTO knjiga_zanr(z_id, k_isbn) value
+(7, '0123456789124');
+INSERT ignore INTO knjiga_zanr(z_id, k_isbn) value
+(3, '0123456789125');
+INSERT ignore INTO knjiga_zanr(z_id, k_isbn) value
+(3, '0123456789126');
+INSERT ignore INTO knjiga_zanr(z_id, k_isbn) value
+(3, '0123456789127');
+INSERT ignore INTO knjiga_zanr(z_id, k_isbn) value
+(3, '0123456789128');
+INSERT ignore INTO knjiga_zanr(z_id, k_isbn) value
+(4, '0123456789129');
+INSERT ignore INTO knjiga_zanr(z_id, k_isbn) value
+(4, '0123456789130');
+INSERT ignore INTO knjiga_zanr(z_id, k_isbn) value
+(6, '0123456789131');
+
+INSERT ignore INTO knjiga_autor(a_id, k_isbn) value
+(1, '0123456789123');
+INSERT ignore INTO knjiga_autor(a_id, k_isbn) value
+(2, '0123456789124');
+INSERT ignore INTO knjiga_autor(a_id, k_isbn) value
+(3, '0123456789125');
+INSERT ignore INTO knjiga_autor(a_id, k_isbn) value
+(9, '0123456789126');
+INSERT ignore INTO knjiga_autor(a_id, k_isbn) value
+(8, '0123456789127');
+INSERT ignore INTO knjiga_autor(a_id, k_isbn) value
+(8, '0123456789128');
+INSERT ignore INTO knjiga_autor(a_id, k_isbn) value
+(9, '0123456789129');
+INSERT ignore INTO knjiga_autor(a_id, k_isbn) value
+(5, '0123456789130');
+INSERT ignore INTO knjiga_autor(a_id, k_isbn) value
+(4, '0123456789131');
