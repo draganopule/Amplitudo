@@ -1,0 +1,101 @@
+/* Da bi sql fajl bio idempotentan u svakom upitu je dodato 'if not exists' */
+
+
+create database if not exists Biblioteka;
+
+create table if not exists korisnik(
+id INT auto_increment not null, 
+username varchar(100) not null unique, 
+god_rodjenja int,
+email varchar(100),
+PRIMARY KEY (id));
+
+create table if not exists ocjena(
+vrijednost int,
+primary key(vrijednost)
+);
+
+create table if not exists izdavac(
+id int auto_increment,
+naziv varchar(100),
+primary key(id)
+);
+
+create table if not exists autor(
+id int auto_increment,
+ime varchar(100),
+prezime varchar(100),
+primary key(id)
+);
+
+create table if not exists zanr(
+id int auto_increment,
+naziv varchar(100),
+primary key(id)
+);
+
+create table if not exists knjiga(
+isbn char(13),
+naziv varchar(100),
+god_izdavanja int,
+i_id int,
+foreign key(i_id) references izdavac(id)
+on delete cascade
+on update cascade,
+primary key(isbn)
+);
+
+create table if not exists recenzija(
+redni_broj int,
+tekst text,
+k_isbn char(13),
+o_vrijednost int,
+k_id int,
+foreign key(k_isbn) references knjiga(isbn)
+on delete cascade
+on update cascade,
+foreign key(o_vrijednost) references ocjena(vrijednost)
+on delete cascade
+on update cascade,
+foreign key(k_id) references korisnik(id)
+on delete cascade
+on update cascade,
+primary key(redni_broj,k_isbn)
+);
+
+create table if not exists iznajmljivanje(
+datum_iznajmljivanja date,
+k_id int,
+k_isbn char(13),
+foreign key(k_id) references korisnik(id)
+on delete cascade
+on update cascade,
+foreign key(k_isbn) references knjiga(isbn)
+on delete cascade
+on update cascade,
+primary key(k_id,k_isbn,datum_iznajmljivanja)/*dodat je datum_iznajmljivanja jer je moguce da korisnik dva puta iznajmi istu knjigu razlicitog datuma*/
+);
+
+create table if not exists knjiga_zanr(
+z_id int,
+k_isbn char(13),
+foreign key(z_id) references zanr(id)
+on delete cascade
+on update cascade,
+foreign key(k_isbn) references knjiga(isbn)
+on delete cascade
+on update cascade,
+primary key(z_id,k_isbn)
+);
+
+create table if not exists knjiga_autor(
+a_id int,
+k_isbn char(13),
+foreign key(a_id) references autor(id)
+on delete cascade
+on update cascade,
+foreign key(k_isbn) references knjiga(isbn)
+on delete cascade
+on update cascade,
+primary key(a_id,k_isbn)
+);
