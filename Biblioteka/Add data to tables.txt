@@ -7,9 +7,6 @@ INSERT INTO korisnik (username, god_rodjenja, email) values
 ('Jelena', 1995, 'jelena@gmail.com'),
 ('Masa', 1998, 'masa@gmail.com');
 
-truncate table ocjena;
-INSERT INTO ocjena values (1),(2),(3),(4),(5);
-
 truncate table izdavac;
 INSERT INTO izdavac (naziv) values
 ('Nova knjiga'),
@@ -38,7 +35,7 @@ INSERT INTO zanr (naziv) values
 ('Esej');
 
 truncate table knjiga;
-INSERT INTO knjiga (isbn, naziv, god_izdavanja, i_id) values
+INSERT INTO knjiga (isbn, naziv, god_izdavanja, izdavac_id) values
 ('0123456789123', 'Profesionalac', 1982, 2),
 ('0123456789124', 'Cas anatomije', 1978, 3),
 ('0123456789125', 'Rat i mir', 1995, 5) ,
@@ -50,7 +47,7 @@ INSERT INTO knjiga (isbn, naziv, god_izdavanja, i_id) values
 ('0123456789131', 'Fama o biciklistima', 2000, 1);
 
 truncate table recenzija;
-INSERT INTO recenzija(redni_broj, tekst, k_isbn, o_vrijednost, k_id) values
+INSERT INTO recenzija(redni_broj, tekst, knjiga_isbn, ocjena, korisnik_id) values
 ('1', 'Neki komentar o knjizi Profesionalac', '0123456789123', 4, 2),
 ('2', 'Drugi komentar o knjizi Profesionalac', '0123456789123', 5, 4),
 ('1', 'Neki komentar o knjizi Cas anatomije', '0123456789124', 5, 1),
@@ -61,7 +58,7 @@ INSERT INTO recenzija(redni_broj, tekst, k_isbn, o_vrijednost, k_id) values
 ('2', 'Drugi komentar o knjizi Na Drini cuprija', '0123456789126', 5, 4);
 
 truncate table iznajmljivanje;
-INSERT INTO iznajmljivanje(datum_iznajmljivanja, k_id, k_isbn) values
+INSERT INTO iznajmljivanje(datum_iznajmljivanja, korisnik_id, knjiga_isbn) values
 ('2019-10-23', 1, '0123456789123'),
 ('2018-05-14', 1, '0123456789123'),
 ('2018-08-05', 3, '0123456789126'),
@@ -70,7 +67,7 @@ INSERT INTO iznajmljivanje(datum_iznajmljivanja, k_id, k_isbn) values
 ('2019-03-05', 4, '0123456789129');
 
 truncate table knjiga_zanr;
-INSERT ignore INTO knjiga_zanr(z_id, k_isbn) values
+INSERT ignore INTO knjiga_zanr(zanr_id, knjiga_isbn) values
 (2, '0123456789123'),
 (7, '0123456789124'),
 (3, '0123456789125'),
@@ -82,7 +79,7 @@ INSERT ignore INTO knjiga_zanr(z_id, k_isbn) values
 (6, '0123456789131');
 
 truncate table knjiga_autor;
-INSERT ignore INTO knjiga_autor(a_id, k_isbn) values
+INSERT ignore INTO knjiga_autor(autor_id, knjiga_isbn) values
 (1, '0123456789123'),
 (2, '0123456789124'),
 (3, '0123456789125'),
