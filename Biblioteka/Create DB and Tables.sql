@@ -2,6 +2,8 @@ DROP DATABASE IF EXISTS Biblioteka;
 
 create database Biblioteka;
 
+USE Biblioteka;
+
 create table korisnik(
 id INT auto_increment not null, 
 username varchar(100) not null unique, 
@@ -19,7 +21,6 @@ primary key(id)
 create table autor(
 id int auto_increment,
 ime varchar(100),
-prezime varchar(100),
 primary key(id)
 );
 
@@ -55,10 +56,21 @@ primary key(redni_broj,knjiga_isbn),
     CONSTRAINT FK_recenzija_korisnik
     foreign key(korisnik_id) references korisnik(id)
     on delete cascade
-    on update cascade,
-    CONSTRAINT chk_ocjena
-    CHECK(ocjena<5 AND ocjena>0)
+    on update cascade
 );
+
+DELIMITER //
+CREATE TRIGGER chk_ocjena
+    BEFORE INSERT ON recenzija 
+    FOR EACH ROW
+BEGIN
+    IF NEW.ocjena < 1 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Unijeli ste ocjenu manju od 1';
+    ELSEIF NEW.ocjena > 5 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Unijeli ste ocjenu vecu od 5';
+    END IF;
+END; //
+DELIMITER ;
 
 create table iznajmljivanje(
 id int auto_increment,
