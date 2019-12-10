@@ -1,0 +1,36 @@
+/* Korisnik pregleda sve knjige iz biblioteke */
+SELECT * FROM knjiga;
+
+/* Korisnik pregleda sve knjige koje je napisao Ivo Andric */
+SELECT * FROM knjiga 
+WHERE isbn IN (SELECT knjiga_isbn FROM knjiga_autor
+	       WHERE autor_id = (SELECT id FROM autor
+                  		 WHERE LOWER(ime) = LOWER('Ivo Andric')));
+
+/* Korisnik pregleda knjige i izlistava za svaku knjigu autora */
+SELECT K.naziv, A.ime from knjiga K, autor A
+WHERE EXISTS(SELECT * from knjiga_autor KA
+             WHERE KA.knjiga_isbn = K.isbn AND A.id = KA.autor_id);
+
+/* Korisnik pregleda sve knjige sa prosjecnom ocjenom vecom od 4.6*/
+SELECT * from knjiga K
+WHERE EXISTS(SELECT AVG(ocjena) as prosjecna_ocjena, knjiga_isbn
+             FROM recenzija R
+             GROUP BY knjiga_isbn
+             HAVING prosjecna_ocjena > 4.6
+             AND K.isbn = R.knjiga_isbn);
+
+/* Korisnik izlistava autore koji imaju vise od jedne knjige. */
+SELECT ime FROM autor A
+WHERE EXISTS(SELECT COUNT(knjiga_isbn) AS broj_knjiga, autor_id
+             FROM knjiga_autor KA
+             GROUP BY autor_id
+             HAVING broj_knjiga > 1
+             AND A.id = KA.autor_id);
+
+/* Korisnik izlistava autore koji imaju vise od jedne knjige. Pored imena autora pise i broj knjiga*/
+SELECT A.ime, X.broj_knjiga FROM autor A,(SELECT COUNT(knjiga_isbn) AS broj_knjiga, autor_id
+             FROM knjiga_autor KA
+             GROUP BY autor_id
+             HAVING broj_knjiga > 1) as X
+WHERE A.id = X.autor_id;
