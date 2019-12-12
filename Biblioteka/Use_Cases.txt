@@ -12,13 +12,20 @@ SELECT K.naziv, A.ime from knjiga K, autor A
 WHERE EXISTS(SELECT * from knjiga_autor KA
              WHERE KA.knjiga_isbn = K.isbn AND A.id = KA.autor_id);
 
-/* Korisnik pregleda sve knjige sa prosjecnom ocjenom vecom od 4.6*/
+/* Korisnik pregleda sve knjige sa prosjecnom ocjenom vecom od 4.6.*/
 SELECT * from knjiga K
 WHERE EXISTS(SELECT AVG(ocjena) as prosjecna_ocjena, knjiga_isbn
              FROM recenzija R
              GROUP BY knjiga_isbn
              HAVING prosjecna_ocjena > 4.6
              AND K.isbn = R.knjiga_isbn);
+
+/* Korisnik pregleda sve knjige sa prosjecnom ocjenom vecom od 4.6.  Pored imena knjige pise i prosjecna ocjena */
+SELECT K.naziv, X.prosjecna_ocjena from knjiga K, (SELECT AVG(ocjena) as prosjecna_ocjena, knjiga_isbn
+             FROM recenzija R
+             GROUP BY knjiga_isbn
+             HAVING prosjecna_ocjena > 4.6) as X
+             WHERE K.isbn = X.knjiga_isbn;
 
 /* Korisnik izlistava autore koji imaju vise od jedne knjige. */
 SELECT ime FROM autor A
@@ -34,3 +41,55 @@ SELECT A.ime, X.broj_knjiga FROM autor A,(SELECT COUNT(knjiga_isbn) AS broj_knji
              GROUP BY autor_id
              HAVING broj_knjiga > 1) as X
 WHERE A.id = X.autor_id;
+
+/* Korisnik izlistava sve knjige koje je iznajmljivao korisnik sa odredjenim username-om */
+SELECT * FROM knjiga K
+WHERE EXISTS (SELECT * FROM iznajmljivanje I
+              WHERE K.isbn = I.knjiga_isbn
+              AND LOWER(I.korisnik_id) = (SELECT KO.id FROM korisnik KO
+                                              WHERE KO.username = LOWER('Marko')));
+
+/*Korisnik izlistava sve knjige koje je objavila odredjena izdavacka kuca */
+SELECT * FROM knjiga K
+WHERE EXISTS (SELECT * FROM izdavac I
+              WHERE I.id = K.izdavac_id
+              AND LOWER(I.naziv) = LOWER('Laguna'));
+
+/*Korisnik izlistava sve knjige koje je objavila odredjena izdavacka kuca, zajedno sa imenom te izdavacke kuce */
+SELECT K.naziv, I.naziv FROM knjiga K, izdavac I
+WHERE I.id = K.izdavac_id
+AND LOWER(I.naziv) = LOWER('Laguna');
+
+/*Korisnik izlistava sve knjige i njihove zanrove */
+SELECT K.naziv, Z.naziv FROM knjiga K, zanr Z
+WHERE EXISTS (SELECT * FROM knjiga_zanr KZ
+              WHERE K.isbn = KZ.knjiga_isbn
+              AND Z.id = KZ.zanr_id);
+
+/*Korisnik izlistava sve knjige odredjenog zanra */
+SELECT K.naziv, Z.naziv FROM knjiga K, zanr Z
+WHERE EXISTS (SELECT * FROM knjiga_zanr KZ
+              WHERE K.isbn = KZ.knjiga_isbn
+              AND Z.id = KZ.zanr_id
+              AND LOWER(Z.naziv) = LOWER('Roman'));
+              
+/* Korisnik izlistava najbolje ocjenjene knjigu po zanrovima */
+SELECT K.naziv, Z.naziv from knjiga K, zanr Z
+WHERE EXISTS(SELECT MAX(ocjena) as najbolja_ocjena, knjiga_isbn
+             FROM recenzija R
+             GROUP BY knjiga_isbn
+             HAVING K.isbn = R.knjiga_isbn)
+AND EXISTS (SELECT * FROM knjiga_zanr KZ
+              WHERE K.isbn = KZ.knjiga_isbn
+              AND Z.id = KZ.zanr_id);
+
+/* Korisnik izlistava najbolje ocjenjene knjigu za odredjeni zanr */
+SELECT K.naziv, Z.naziv from knjiga K, zanr Z
+WHERE EXISTS(SELECT MAX(ocjena) as najbolja_ocjena, knjiga_isbn
+             FROM recenzija R
+             GROUP BY knjiga_isbn
+             HAVING K.isbn = R.knjiga_isbn)
+AND EXISTS (SELECT * FROM knjiga_zanr KZ
+              WHERE K.isbn = KZ.knjiga_isbn
+              AND Z.id = KZ.zanr_id
+              AND LOWER(Z.naziv) = LOWER('Komedija'));
