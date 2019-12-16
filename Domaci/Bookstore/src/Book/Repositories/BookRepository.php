@@ -42,8 +42,7 @@ class BookRepository extends ObjectRepository
          if (!$this->connection->query($query)) {
              throw new ItemNotSavedException();
          }
-         //echo '<h3>' . $data['isbn'] . '</h3>';
-         $isbn = str_replace("'", "", $data['isbn']);
-         return  $this->findById($isbn);
+         
+         return  $this->findById($book->getIsbn());
      }
 }

@@ -20,7 +20,7 @@ foreach ($books as $book) {
 //echo '<h1>' . $knjigaRepository->findById('0123456789798')->naziv . '</h1>';
 
 //$dictionaryRepository->insert(['id' => 3, 'name' => 'Ime 1', 'language_code' => 'en', 'description' => 'Opis 1']);
-$bookRepository->insert(new Book('0123456789804', 'Ime 4', 2019, 5));
+$bookRepository->insert(new Book('0123456789806', 'Ime 6', 2019, 5));
 //$dictionaryRepository->destroy(3);
 //try {
 //    $dictionaryRepository->findById(3);

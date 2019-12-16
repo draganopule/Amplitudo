@@ -16,6 +16,11 @@ class Book
         $this->publisherId = $publisherId;
     }
     
+    public function getIsbn()
+    {
+        return $this->isbn;
+    }
+
     public function __toString()
     {
         return $this->name;
