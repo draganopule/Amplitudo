@@ -1,26 +1,26 @@
-USE Biblioteka;
+USE bookstore;
 
 SET FOREIGN_KEY_CHECKS = 0; 
 
-truncate table korisnik;
-truncate table izdavac;
-truncate table autor;
-truncate table zanr;
-truncate table knjiga;
-truncate table recenzija;
-truncate table iznajmljivanje;
-truncate table knjiga_zanr;
-truncate table knjiga_autor;
+TRUNCATE TABLE users;
+TRUNCATE TABLE publishers;
+TRUNCATE TABLE autors;
+TRUNCATE TABLE genres;
+TRUNCATE TABLE books;
+TRUNCATE TABLE reviews;
+TRUNCATE TABLE rentals;
+TRUNCATE TABLE book_genres;
+TRUNCATE TABLE book_autors;
 
 SET FOREIGN_KEY_CHECKS = 1; 
 
-INSERT INTO korisnik (username, god_rodjenja, email) values
+INSERT INTO users (username, birth_year, email) VALUES
 ('Marko', 1992, 'marko@gmail.com'),
 ('Petar', 1990, 'petar@gmail.com'),
 ('Jelena', 1995, 'jelena@gmail.com'),
 ('Masa', 1998, 'masa@gmail.com');
 
-INSERT INTO izdavac (naziv) values
+INSERT INTO publishers (name) VALUES
 ('Nova knjiga'),
 ('Laguna'),
 ('CID'),
@@ -28,7 +28,7 @@ INSERT INTO izdavac (naziv) values
 ('Narodna knjiga'),
 ('Obod');
 
-INSERT INTO autor(ime) values
+INSERT INTO autors(name) VALUES
 ('Dusan Kovacevic'),
 ('Danilo Kis'),
 ('Lav Tolstoj'),
@@ -37,7 +37,7 @@ INSERT INTO autor(ime) values
 ('Svetislav Basara'),
 ('Milenko Ratkovic');
 
-INSERT INTO zanr (naziv) values
+INSERT INTO genres(name) VALUES
 ('Drama'),
 ('Komedija'),
 ('Roman'),
@@ -46,7 +46,7 @@ INSERT INTO zanr (naziv) values
 ('Fantastika'),
 ('Esej');
 
-INSERT INTO knjiga (isbn, naziv, god_izdavanja, izdavac_id) values
+INSERT INTO books (isbn, name, year_of_publication, publisher_id) VALUES
 ('0123456789123', 'Profesionalac', 1982, 2),
 ('0123456789124', 'Cas anatomije', 1978, 3),
 ('0123456789125', 'Rat i mir', 1995, 5) ,
@@ -57,7 +57,7 @@ INSERT INTO knjiga (isbn, naziv, god_izdavanja, izdavac_id) values
 ('0123456789130', 'Najljepse price', 2008, 6),
 ('0123456789131', 'Fama o biciklistima', 2000, 1);
 
-INSERT INTO recenzija(redni_broj, tekst, knjiga_isbn, ocjena, korisnik_id) values
+INSERT INTO reviews(rev_number, rev_text, book_isbn, grade, user_id) VALUES
 ('1', 'Neki komentar o knjizi Profesionalac', '0123456789123', 4, 2),
 ('2', 'Drugi komentar o knjizi Profesionalac', '0123456789123', 5, 4),
 ('1', 'Neki komentar o knjizi Cas anatomije', '0123456789124', 5, 1),
@@ -67,7 +67,7 @@ INSERT INTO recenzija(redni_broj, tekst, knjiga_isbn, ocjena, korisnik_id) value
 ('1', 'Neki komentar o knjizi Na Drini cuprija', '0123456789126', 5, 2),
 ('2', 'Drugi komentar o knjizi Na Drini cuprija', '0123456789126', 5, 4);
 
-INSERT INTO iznajmljivanje(datum_iznajmljivanja, korisnik_id, knjiga_isbn) values
+INSERT INTO rentals(rental_date, user_id, book_isbn) VALUES
 ('2019-10-23', 1, '0123456789123'),
 ('2018-05-14', 1, '0123456789123'),
 ('2018-08-05', 3, '0123456789126'),
@@ -75,7 +75,7 @@ INSERT INTO iznajmljivanje(datum_iznajmljivanja, korisnik_id, knjiga_isbn) value
 ('2018-04-17', 3, '0123456789131'),
 ('2019-03-05', 4, '0123456789129');
 
-INSERT ignore INTO knjiga_zanr(zanr_id, knjiga_isbn) values
+INSERT INTO book_genres(genre_id,book_isbn) VALUES
 (2, '0123456789123'),
 (7, '0123456789124'),
 (3, '0123456789125'),
@@ -86,7 +86,7 @@ INSERT ignore INTO knjiga_zanr(zanr_id, knjiga_isbn) values
 (4, '0123456789130'),
 (6, '0123456789131');
 
-INSERT ignore INTO knjiga_autor(autor_id, knjiga_isbn) values
+INSERT INTO book_autors(autor_id, book_isbn) VALUES
 (1, '0123456789123'),
 (2, '0123456789124'),
 (3, '0123456789125'),
