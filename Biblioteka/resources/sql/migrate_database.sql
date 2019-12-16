@@ -1,117 +1,127 @@
-DROP DATABASE IF EXISTS Biblioteka;
+DROP DATABASE IF EXISTS bookstore;
 
-create database Biblioteka;
+CREATE DATABASE bookstore;
 
-USE Biblioteka;
+USE bookstore;
 
-create table korisnik(
-id INT auto_increment not null, 
-username varchar(100) not null unique, 
-god_rodjenja int,
-email varchar(100),
-primary key(id)
+CREATE TABLE users (
+id INT AUTO_INCREMENT NOT NULL, 
+username VARCHAR(100) NOT NULL UNIQUE, 
+birth_year INT,
+email VARCHAR(100),
+PRIMARY KEY(id)
 );
 
-create table izdavac(
-id int auto_increment,
-naziv varchar(100),
-primary key(id)
+CREATE TABLE publishers (
+id INT AUTO_INCREMENT,
+name VARCHAR(100),
+PRIMARY KEY(id)
 );
 
-create table autor(
-id int auto_increment,
-ime varchar(100),
-primary key(id)
+CREATE TABLE autors(
+id INT AUTO_INCREMENT,
+name VARCHAR(100),
+PRIMARY KEY(id)
 );
 
-create table zanr(
-id int auto_increment,
-naziv varchar(100),
-primary key(id)
+CREATE TABLE genres(
+id INT AUTO_INCREMENT,
+name VARCHAR(100),
+PRIMARY KEY(id)
 );
 
-create table knjiga(
-isbn char(13),
-naziv varchar(100),
-god_izdavanja int,
-izdavac_id int,
-primary key(isbn),
-	CONSTRAINT FK_knjiga_izdavac
-	foreign key(izdavac_id) references izdavac(id)
-	on delete cascade
-	on update cascade
+CREATE TABLE books(
+isbn CHAR(13),
+name VARCHAR(100),
+year_of_publication INT,
+publisher_id INT,
+PRIMARY KEY(isbn),
+	CONSTRAINT FK_books_publisher
+	FOREIGN KEY(publisher_id) REFERENCES publishers(id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
 );
 
-create table recenzija(
-redni_broj int,
-tekst text,
-knjiga_isbn char(13),
-ocjena int,
-korisnik_id int,
-primary key(redni_broj,knjiga_isbn),
-    CONSTRAINT FK_recenzija_knjiga
-    foreign key(knjiga_isbn) references knjiga(isbn)
-    on delete cascade
-    on update cascade,
-    CONSTRAINT FK_recenzija_korisnik
-    foreign key(korisnik_id) references korisnik(id)
-    on delete cascade
-    on update cascade
+CREATE TABLE reviews(
+rev_number INT,
+rev_text  TEXT,
+grade INT,
+book_isbn CHAR(13),
+user_id INT,
+PRIMARY KEY(rev_number, book_isbn),
+    CONSTRAINT FK_reviews_book
+    FOREIGN KEY(book_isbn) REFERENCES books(isbn)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CONSTRAINT FK_reviews_user
+    FOREIGN KEY(user_id) REFERENCES users(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
 DELIMITER //
-CREATE TRIGGER chk_ocjena
-    BEFORE INSERT ON recenzija 
+CREATE TRIGGER chk_grade_insert
+    BEFORE INSERT ON reviews 
     FOR EACH ROW
 BEGIN
-    IF NEW.ocjena < 1 THEN
+    IF NEW.grade < 1 THEN
     SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Unijeli ste ocjenu manju od 1';
-    ELSEIF NEW.ocjena > 5 THEN
+    ELSEIF NEW.grade > 5 THEN
     SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Unijeli ste ocjenu vecu od 5';
     END IF;
-END; //
+END;//
+CREATE TRIGGER chk_grade_update
+    BEFORE UPDATE ON reviews
+    FOR EACH ROW
+BEGIN
+    IF NEW.grade < 1 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Unijeli ste ocjenu manju od 1';
+    ELSEIF NEW.grade > 5 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Unijeli ste ocjenu vecu od 5';
+    END IF;
+END;//
 DELIMITER ;
 
-create table iznajmljivanje(
-id int auto_increment,
-datum_iznajmljivanja date,
-korisnik_id int,
-knjiga_isbn char(13),
-primary key(id),
-    CONSTRAINT FK_iznajmljivanje_korisnik
-    foreign key(korisnik_id) references korisnik(id)
-    on delete cascade
-    on update cascade,
-    CONSTRAINT FK_iznajmljivanje_knjiga
-    foreign key(knjiga_isbn) references knjiga(isbn)
-    on delete cascade
-    on update cascade
+CREATE TABLE rentals(
+id INT AUTO_INCREMENT,
+rental_date DATE,
+user_id INT,
+book_isbn CHAR(13),
+PRIMARY KEY(id),
+    CONSTRAINT FK_rentals_user
+    FOREIGN KEY(user_id) REFERENCES users(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CONSTRAINT FK_rentals_book
+    FOREIGN KEY(book_isbn) REFERENCES books(isbn)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
-create table knjiga_zanr(
-zanr_id int,
-knjiga_isbn char(13),
-primary key(zanr_id,knjiga_isbn),
-    CONSTRAINT FK_knjiga_zanr_zanr
-    foreign key(zanr_id) references zanr(id)
-    on delete cascade
-    on update cascade,
-    CONSTRAINT knjiga_zanr_knjiga
-    foreign key(knjiga_isbn) references knjiga(isbn)
-    on delete cascade
-    on update cascade
+CREATE TABLE book_genres(
+genre_id INT,
+book_isbn CHAR(13),
+PRIMARY KEY(genre_id, book_isbn),
+    CONSTRAINT FK_book_genres_genre
+    FOREIGN KEY(genre_id) REFERENCES genres(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CONSTRAINT book_genres_book
+    FOREIGN KEY(book_isbn) REFERENCES books(isbn)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
-create table knjiga_autor(
-autor_id int,
-knjiga_isbn char(13),
-primary key(autor_id,knjiga_isbn),
-    CONSTRAINT FK_knjiga_autor_autor
-    foreign key(autor_id) references autor(id)
-    on delete cascade
-    on update cascade,
-    CONSTRAINT knjiga_autor_knjiga
-    foreign key(knjiga_isbn) references knjiga(isbn)
-    on delete cascade
-    on update cascade
+CREATE TABLE book_autors(
+autor_id INT,
+book_isbn CHAR(13),
+PRIMARY KEY(autor_id, book_isbn),
+    CONSTRAINT FK_book_autors_autor
+    FOREIGN KEY(autor_id) REFERENCES autors(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CONSTRAINT book_autors_book
+    FOREIGN KEY(book_isbn) REFERENCES books(isbn)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
