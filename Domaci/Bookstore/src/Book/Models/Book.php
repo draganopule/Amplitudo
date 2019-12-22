@@ -25,4 +25,14 @@ class Book
     {
         return $this->name;
     }
+
+    public function __toArray()
+    {
+        return [
+            'isbn' => $this->isbn,
+            'name' => $this->name,
+            'year_of_publication' => $this->yearOfPublication,
+            'publisher_id' => $this->publisherId,
+        ];
+    }
 }
