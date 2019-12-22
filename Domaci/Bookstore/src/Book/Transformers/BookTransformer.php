@@ -13,22 +13,13 @@ class BookTransformer extends ObjectTransformer
         'year_of_publication' => 'int',
         'publisher_id' => 'int',
     ];
-    public function transform($array)
+    public function toObject($array)
     {
         return new Book(
-            $array['isbn'],
-            $array['name'],
-            $array['year_of_publication'],
-            $array['publisher_id']
+            $array['isbn'] ?? 0,
+            $array['name'] ?? '',
+            $array['year_of_publication'] ?? 0,
+            $array['publisher_id'] ?? 0
         );
-    }
-    public function transformToArray($object)
-    {
-        return [
-            'isbn' => $this->transformString($object->isbn),
-            'name' => $this->transformString($object->name),
-            'year_of_publication' => $object->yearOfPublication,
-            'publisher_id' => $object->publisherId,
-        ];
     }
 }
