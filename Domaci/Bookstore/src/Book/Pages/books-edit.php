@@ -1,5 +1,5 @@
 <?php
-    require_once './autoload.php';
+    require_once '../../autoload.php';
 
     $errors     = fetchErrors();
     $activeItem = isset($_GET['item']) ? books()->findById($_GET['item']) : null;

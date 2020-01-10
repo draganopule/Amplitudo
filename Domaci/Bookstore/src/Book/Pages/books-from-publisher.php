@@ -3,7 +3,7 @@ use Bookstore\Book\Repositories\BookRepository;
 use Bookstore\Library\DB\DBConnection;
 use Bookstore\Publisher\Repositories\PublisherRepository;
 
-require_once './autoload.php';
+require_once '../../autoload.php';
 
 $errors = [];
 $bookRepository = books();

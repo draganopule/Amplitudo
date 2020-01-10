@@ -2,7 +2,7 @@
 use Bookstore\Book\Repositories\BookRepository;
 use Bookstore\Library\DB\DBConnection;
 
-require_once './autoload.php';
+require_once '../../autoload.php';
 
 $errors = [];
 $bookRepository = new BookRepository(DBConnection::getConnection());

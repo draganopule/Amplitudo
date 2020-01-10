@@ -2,7 +2,7 @@
 
 use Bookstore\Library\Exceptions\ValidationException;
 
-require_once './autoload.php';
+require_once '../../autoload.php';
 
 try {
     requestValidator()->validateWithThrow([
