@@ -4,7 +4,7 @@ namespace Bookstore\Library\Repositories;
 
 use Bookstore\Library\Exceptions\ItemNotDeletedException;
 use Bookstore\Library\Exceptions\ItemNotFoundException;
-use Dictionary\Library\Exceptions\ItemNotSavedException;
+use Bookstore\Library\Exceptions\ItemNotSavedException;
 use Bookstore\Library\Transformers\ObjectTransformer;
 
 use mysqli as MySQL;
@@ -15,9 +15,7 @@ class ObjectRepository
      * @var MySQL
      */
     protected $connection;
-    /**
-     * @var ObjectTransformer
-     */
+    
     protected $transformer;
 
     protected $tableName;
@@ -57,6 +55,7 @@ class ObjectRepository
     public function save($data)
     {
         if (isset($data[$this->primaryKey])) {
+            echo $data[$this->primaryKey];
             return $this->update($data);
         } else {
             return $this->create($data);

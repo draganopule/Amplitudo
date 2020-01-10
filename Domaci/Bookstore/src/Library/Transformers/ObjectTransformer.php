@@ -52,7 +52,7 @@ abstract class ObjectTransformer
             case 'int':
                 return intval($value);
             case 'string':
-                return "'" . $this->sqlString($value) . "'";
+                return $this->sqlString($value);
             case 'string:nullable':
                 return $this->sqlNullableString($value);
             default:

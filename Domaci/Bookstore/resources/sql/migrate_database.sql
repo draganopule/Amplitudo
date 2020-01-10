@@ -31,11 +31,12 @@ PRIMARY KEY(id)
 );
 
 CREATE TABLE books(
-isbn CHAR(13),
+id INT AUTO_INCREMENT,
+isbn CHAR(13) NOT NULL UNIQUE,
 name VARCHAR(100),
 year_of_publication INT,
 publisher_id INT,
-PRIMARY KEY(isbn),
+PRIMARY KEY(id),
 	CONSTRAINT FK_books_publisher
 	FOREIGN KEY(publisher_id) REFERENCES publishers(id)
 	ON DELETE CASCADE
@@ -46,11 +47,11 @@ CREATE TABLE reviews(
 rev_number INT,
 rev_text  TEXT,
 grade INT,
-book_isbn CHAR(13),
+book_id INT,
 user_id INT,
-PRIMARY KEY(rev_number, book_isbn),
+PRIMARY KEY(rev_number, book_id),
     CONSTRAINT FK_reviews_book
-    FOREIGN KEY(book_isbn) REFERENCES books(isbn)
+    FOREIGN KEY(book_id) REFERENCES books(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
     CONSTRAINT FK_reviews_user
@@ -86,42 +87,42 @@ CREATE TABLE rentals(
 id INT AUTO_INCREMENT,
 rental_date DATE,
 user_id INT,
-book_isbn CHAR(13),
+book_id INT,
 PRIMARY KEY(id),
     CONSTRAINT FK_rentals_user
     FOREIGN KEY(user_id) REFERENCES users(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
     CONSTRAINT FK_rentals_book
-    FOREIGN KEY(book_isbn) REFERENCES books(isbn)
+    FOREIGN KEY(book_id) REFERENCES books(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
 
 CREATE TABLE book_genres(
 genre_id INT,
-book_isbn CHAR(13),
-PRIMARY KEY(genre_id, book_isbn),
+book_id INT,
+PRIMARY KEY(genre_id, book_id),
     CONSTRAINT FK_book_genres_genre
     FOREIGN KEY(genre_id) REFERENCES genres(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
     CONSTRAINT book_genres_book
-    FOREIGN KEY(book_isbn) REFERENCES books(isbn)
+    FOREIGN KEY(book_id) REFERENCES books(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
 
 CREATE TABLE book_autors(
 autor_id INT,
-book_isbn CHAR(13),
-PRIMARY KEY(autor_id, book_isbn),
+book_id INT,
+PRIMARY KEY(autor_id, book_id),
     CONSTRAINT FK_book_autors_autor
     FOREIGN KEY(autor_id) REFERENCES autors(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
     CONSTRAINT book_autors_book
-    FOREIGN KEY(book_isbn) REFERENCES books(isbn)
+    FOREIGN KEY(book_id) REFERENCES books(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );

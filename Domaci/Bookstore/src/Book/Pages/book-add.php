@@ -12,7 +12,7 @@ $yearOfPublication = null;
 $publisherId = null;
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect('dictionary.php');
+    redirect('book.php');
 }
 
 if (!isset($_POST['isbn'])) {
