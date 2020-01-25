@@ -102,7 +102,7 @@ class BookRepository extends ObjectRepository
     public function booksSearch($name)
     {
         $query = "SELECT * FROM books B WHERE lower(B.name) like '%" . $name . "%'";
-        echo '<pre>' . $query . '</pre>';
+       
         $result = $this->connection->query($query);
 
         if (!$result) {
@@ -114,4 +114,5 @@ class BookRepository extends ObjectRepository
         mysqli_free_result($result);
         return $transformed;
     }
+
 }

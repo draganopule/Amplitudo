@@ -53,6 +53,7 @@ else{
                     <th>Name</th>
                     <th>Year of publication</th>
                     <th>Publisher</th>
+                    <th class="text-center">Reviews</th>
                     <th class="text-center">Actions</th>
                 </tr>
                 </thead>
@@ -65,6 +66,10 @@ else{
                         <td><?php echo $item->name; ?></td>
                         <td><?php echo $item->yearOfPublication; ?></td>
                         <td><?php echo $item->publisher()->name ?></td>
+                        <td class="text-center">
+                            <a href="../../Review/Pages/reviews-from-book.php?item=<?php echo $item->id ?>" method="GET" class="text-info mr-2">View</a>
+                            <a href="../../Review/Pages/reviews-add.php?item=<?php echo $item->id ?>" method="GET" class="text-info mr-2">Write</a>
+                        </td>
                         <td class="text-center">
                             <a href="books-edit.php?item=<?php echo $item->id ?>" class="text-info mr-2">Edit</a>
                             <a href="books-delete.php?item=<?php echo $item->id ?>" class="text-danger mr-2">Delete</a>

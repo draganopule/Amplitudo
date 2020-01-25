@@ -13,7 +13,7 @@ use mysqli as MySQL;
 
 class ReviewRepository extends ObjectRepository
 {
-    protected $tableName = 'review';
+    protected $tableName = 'reviews';
     protected $primaryKey = 'rev_number';
     
     public function __construct(MySQL $connection)
@@ -23,11 +23,11 @@ class ReviewRepository extends ObjectRepository
     }
 
     /* Korisnik racuna prosjecnu ocjenu za odredjenu knjigu*/
-    public function averageGradeOfBook($bookName)
+    public function averageGradeOfBook($bookId)
     {
-        $bookName = books()->transformer->sqlString($bookName);
+        //$bookName = books()->transformer->sqlString($bookName);
 
-        $query = "SELECT AVG(grade) FROM reviews R WHERE book_id = (SELECT id FROM books B WHERE B.name = $bookName)";
+        $query = "SELECT AVG(grade) FROM reviews R WHERE book_id = $bookId";
         
         $result = $this->connection->query($query);
 
@@ -36,6 +36,23 @@ class ReviewRepository extends ObjectRepository
         }
 
          $transformed = $this->transformer->toData($result);
+
+        mysqli_free_result($result);
+        return $transformed;
+    }
+
+    /*Korisnik izlistava sve kritike za odredjenu knjigu */
+    public function reviewsFromBooks($id)
+    {
+        $query = "SELECT * FROM reviews WHERE book_id = $id";
+        //echo '<pre>' . $query . '</pre>';
+        $result = $this->connection->query($query);
+
+        if (!$result) {
+            return [];
+        }
+
+        $transformed = reviews()->transformer->toObjectArray($result);
 
         mysqli_free_result($result);
         return $transformed;

@@ -28,4 +28,9 @@ class Review
             'user_id' => $this->userId,
         ];
     }
+
+    public function __toString()
+    {
+        return $this->revText;
+    }
 }

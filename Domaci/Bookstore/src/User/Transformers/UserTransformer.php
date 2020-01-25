@@ -10,8 +10,8 @@ class UserTransformer extends ObjectTransformer
     protected $fields = [
         'id' => 'int',
         'username' => 'string',
-        'birth_year' => 'string',
-        'email' => 'int',
+        'birth_year' => 'int',
+        'email' => 'string',
     ];
     public function toObject($array)
     {

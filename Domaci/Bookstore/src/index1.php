@@ -12,6 +12,7 @@ $connection = DBConnection::getConnection();
 
 $bookRepository = new BookRepository($connection);
 $reviewRepository = new ReviewRepository($connection);
+$autorRepository = autors();
 
 //$books = $bookRepository->all();
 //$books = $bookRepository->booksFromPublisher('Laguna');
@@ -19,8 +20,17 @@ $reviewRepository = new ReviewRepository($connection);
 $books = $bookRepository->booksSearch('cas');
 
 foreach ($books as $book) {
-    echo '<h3>' . $book . '</h3>';
+    
+    $autor = $autorRepository->autorFromBook($book->id);
+    $avGrade = $reviewRepository->averageGradeOfBook($book->id);
+    echo '<h3>' . $book . ', ' . $autor . ', ' . $avGrade . '</h3>';
 }
+$users = users()->all();
+
+foreach ($users as $user) {
+    echo '<pre>' . $user->email . '</pre>';
+}
+
 
 /*
 foreach ($books as $book) {

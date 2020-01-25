@@ -55,7 +55,7 @@ class ObjectRepository
     public function save($data)
     {
         if (isset($data[$this->primaryKey])) {
-            echo $data[$this->primaryKey];
+            //echo $data[$this->primaryKey];
             return $this->update($data);
         } else {
             return $this->create($data);
@@ -68,6 +68,7 @@ class ObjectRepository
         $columns = '(' . implode(', ', array_keys($data)) . ')';
         $values = '(' . implode(', ', array_values($data)) . ')';
         $query = "INSERT INTO $this->tableName $columns VALUES $values";
+       // echo '<pre>' . $query . '</pre>';
         
         if (!$this->connection->query($query)) {
             throw new ItemNotSavedException();
@@ -88,6 +89,7 @@ class ObjectRepository
             return $param . '=' . $params[$param];
         }, array_keys($params)));
         $query = "UPDATE $this->tableName SET $values WHERE $this->primaryKey=$primaryKey";
+       // echo '<pre>' . $query . '</pre>';
         if (!$this->connection->query($query)) {
             throw new ItemNotSavedException();
         }

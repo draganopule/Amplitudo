@@ -78,7 +78,10 @@ WHERE EXISTS (SELECT * FROM book_genres BG
               WHERE B.isbn = BG.book_isbn
               AND G.id = BG.genre_id
               AND LOWER(G.name) = LOWER('Roman'));
-              
+
+/*Korisnik izlistava sve kritike za odredjenu knjigu */
+SELECT * FROM reviews WHERE book_id = 1;
+
 /* Korisnik izlistava najbolje ocjenjenu knjigu po zanrovima */
 SELECT B.name, G.name FROM books B, genres G
 WHERE EXISTS(SELECT MAX(grade) as best_grade, book_isbn
@@ -99,3 +102,11 @@ AND EXISTS (SELECT * FROM book_genres BG
               WHERE B.isbn = BG.book_isbn
               AND G.id = BG.genre_id
               AND LOWER(G.name) = LOWER('Komedija'));
+
+/*Korisnik prikazuje autora za odredjenu knjigu */
+SELECT * FROM autors A 
+    WHERE EXISTS(SELECT * FROM book_autors BA 
+                WHERE A.id = BA.autor_id AND BA.book_id = 1);
+
+/*Korisnik izlistava sve kritike za odredjenu knjigu */
+SELECT * FROM reviews WHERE book_id = 1;

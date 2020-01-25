@@ -46,7 +46,7 @@ $genres = genres()->all();
     </form>
 
     <br>
-    <form action="./books-from-publisher.php" method="POST">
+    <form action="./Book/Pages/books-from-publisher.php" method="POST">
         <!-- Publisher id -->
         <label for="publisher_id">Publisher</label>
         <select name="publisher_id" id="publisher_id">
@@ -62,7 +62,7 @@ $genres = genres()->all();
     </form>
 
     <br>
-    <form action="./books-from-autor.php" method="POST">
+    <form action="./Book/Pages/books-from-autor.php" method="POST">
         <!-- Autor id -->
         <label for="autor_id">Autor</label>
         <select name="autor_id" id="autor_id">
@@ -78,7 +78,7 @@ $genres = genres()->all();
     </form>
 
     <br>
-    <form action="./books-of-genres.php" method="POST">
+    <form action="./Book/Pages/books-of-genres.php" method="POST">
         <!-- Genre id -->
         <label for="genre_id">Genre</label>
         <select name="genre_id" id="genre_id">

@@ -2,9 +2,8 @@
     require_once '../../autoload.php';
 
     $errors     = fetchErrors();
-    $activeItem = isset($_GET['item']) ? books()->findById($_GET['item']) : null;
+    $activeItem = isset($_GET['item']) ? users()->findById($_GET['item']) : null;
     
-    $publishers  = publishers()->all();
 ?>
 <!doctype html>
 <html lang="en">
@@ -21,11 +20,9 @@
     <!-- Custom styles -->
     <link rel="stylesheet" href="../../assets/css/app.css">
 
-    <title>Books</title>
+    <title>Users</title>
 </head>
 <body>
-<!-- Header -->
-<?php require_once '../../Partials/header.php'; ?>
 
 <div class="container-fluid body-content p-0 m-0">
 
@@ -34,9 +31,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="bg-light p-4 rounded">
-                    <h1 class="display-4">Books</h1>
-                    <p class="lead">Book is represent with name, year of publication, publisher and ISBN number.</p>
-                    <p>Define all aspects of a single book.</p>
+                    <h1 class="display-4">Users</h1>
+                    <p class="lead">User is represent with username, email, and birth year</p>
+                    <p>User is a person who can rent books and  write reviews</p>
                 </div>
             </div>
         </div>
@@ -55,59 +52,47 @@
         <!-- Main form -->
         <div class="row mt-4">
             <div class="col-sm-12">
-                <form action="books-processors.php" method="POST" class="bg-light rounded p-4">
+                <form action="users-processors.php" method="POST" class="bg-light rounded p-4">
 
                     <!-- ID -->
                     <?php if ($activeItem) { ?>
                     <input type="hidden" value="<?php echo $activeItem->id; ?>" name="id" id="id">
                     <?php } ?>
 
-                    <!-- Name -->
+                    <!-- Username -->
                     <div class="form-group">
-                        <label for="name">Name:</label>
+                        <label for="username">Username:</label>
 
                         <input type="text"
                                class="form-control"
-                               id="name"
-                               name="name"
-                               value="<?php if ($activeItem) echo $activeItem->name ?>">
+                               id="username"
+                               name="username"
+                               value="<?php if ($activeItem) echo $activeItem->username ?>">
                     </div>
 
-                    <!-- ISBN -->
+                    <!-- Email address -->
                     <div class="form-group">
-                        <label for="isbn">ISBN:</label>
+                        <label for="email">Email address:</label>
 
                         <input type="text"
                                class="form-control"
-                               id="isbn"
-                               name="isbn"
-                               value="<?php if ($activeItem) echo $activeItem->isbn ?>">
+                               id="email"
+                               name="email"
+                               value="<?php if ($activeItem) echo $activeItem->email ?>">
                     </div>
 
-                     <!-- Year od publication -->
-                     <div class="form-group">
-                        <label for="year_of_publication">Year od publication:</label>
-
-                        <input type="text"
-                               class="form-control"
-                               id="year_of_publication"
-                               name="year_of_publication"
-                               value="<?php if ($activeItem) echo $activeItem->yearOfPublication ?>">
-                    </div>
-
-                   <!-- Publisher -->
+                    <!-- Birth Year -->
                     <div class="form-group">
-                        <label for="publisher">Publisher:</label>
+                        <label for="birth_year">Birth Year:</label>
 
-                        <select class="custom-select" name="publisher_id" id="publisher">
-                            <?php foreach ($publishers as $publisher) { ?>
-                                <option value="<?php echo $publisher->id ?>" <?php if ($activeItem && $activeItem->publisherId == $publisher->id) echo 'selected' ?>>
-                                    <?php echo $publisher->name ?>
-                                </option>
-                            <?php } ?>
+                        <select class="custom-select" name="birth_year" id="birth_year">
+                            <?php for ($g = 2020; $g > 1900; $g--) {
+                                echo "<option value=$g>$g</option>";
+                             } ?>
                         </select>
                     </div>
 
+                    
                     <!-- Submit -->
                     <button type="submit" class="btn btn-primary mb-2">
                         <?php if ($activeItem) echo 'Update'; else echo 'Create'; ?>

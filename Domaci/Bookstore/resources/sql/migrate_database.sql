@@ -44,7 +44,7 @@ PRIMARY KEY(id),
 );
 
 CREATE TABLE reviews(
-rev_number INT,
+rev_number INT AUTO_INCREMENT,
 rev_text  TEXT,
 grade INT,
 book_id INT,

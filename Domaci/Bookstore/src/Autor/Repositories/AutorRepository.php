@@ -21,4 +21,22 @@ class AutorRepository extends ObjectRepository
         parent::__construct($connection);
         $this->transformer = new AutorTransformer($connection);
     }
+
+    
+    /*Korisnik prikazuje autora za odredjenu knjigu */
+    public function autorFromBook($id)
+    {
+        $query = "SELECT * FROM autors A WHERE EXISTS (SELECT * FROM book_autors BA WHERE A.id = BA.autor_id AND BA.book_id = $id)";
+        //echo '<pre>' . $query . '</pre>';
+        $result = $this->connection->query($query);
+        $item = $result->fetch_assoc();
+
+        if (!$item) {
+            throw new ItemNotFoundException();
+        }
+
+        $transformed = $this->transformer->toObject($item);
+        mysqli_free_result($result);
+        return $transformed;
+    }
 }
