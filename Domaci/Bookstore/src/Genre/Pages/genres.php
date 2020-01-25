@@ -25,7 +25,8 @@ $items = genres()->all();
 <body>
 
 <div class="container-fluid body-content p-0 m-0">
-
+<!-- Navigation -->
+<?php require_once '../../Partials/navigation.php'; ?>
     <!-- Main content -->
     <div class="p-4">
         <div class="text-right">

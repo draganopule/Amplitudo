@@ -4,50 +4,43 @@
 
             <!-- Home -->
             <li class="nav-item">
-                <a href="/index.php" class="nav-link <?php if (isPageActive(['index.php'])) echo 'active' ?>">
+                <a href="../../index.php" class="nav-link <?php if (isPageActive(['index.php'])) echo 'active' ?>">
                     Home
                 </a>
             </li>
 
-            <!-- Dictionaries -->
+            <!-- Books -->
             <li class="nav-item">
-                <a href="/Dictionary/Pages/dictionaries.php" class="nav-link <?php if (isPageActive(['dictionaries.php', 'dictionaries-edit.php'])) echo 'active' ?>">
-                    Dictionaries
+                <a href="../../Book/Pages/books.php" class="nav-link <?php if (isPageActive(['books.php', 'books-edit.php'])) echo 'active' ?>">
+                    Books
                 </a>
             </li>
 
-            <!-- Words -->
+            <!-- Autors -->
             <li class="nav-item">
-                <a href="/Word/Pages/words.php" class="nav-link <?php if (isPageActive(['words.php', 'words-edit.php', 'word-translations-edit.php', 'word-forms-edit.php'])) echo 'active' ?>">
-                    Words
+                <a href="../../Autor/Pages/autors.php" class="nav-link <?php if (isPageActive(['autors.php', 'autors-edit.php', ])) echo 'active' ?>">
+                    Autors
                 </a>
             </li>
 
-            <!-- Word Types -->
+            <!-- Genres -->
             <li class="nav-item">
-                <a href="/WordType/Pages/word-types.php" class="nav-link <?php if (isPageActive(['word-types.php', 'word-types-edit.php'])) echo 'active' ?>">
-                    Word types
+                <a href="../../Genre/Pages/genres.php" class="nav-link <?php if (isPageActive(['genres.php', 'genres-edit.php'])) echo 'active' ?>">
+                    Genres
                 </a>
             </li>
 
-            <!-- Word form types -->
+            <!-- Publishers -->
             <li class="nav-item">
-                <a href="/WordFormType/Pages/word-form-types.php" class="nav-link <?php if (isPageActive(['word-form-types.php', 'word-form-types-edit.php'])) echo 'active' ?>">
-                    Word form types
+                <a href="../../Publisher/Pages/publishers.php" class="nav-link <?php if (isPageActive(['publishers.php', 'publishers-edit.php'])) echo 'active' ?>">
+                    Publisher
                 </a>
             </li>
 
-            <!-- Word form states -->
+            <!-- Users -->
             <li class="nav-item">
-                <a href="/WordFormState/Pages/word-form-states.php" class="nav-link <?php if (isPageActive(['word-form-states.php', 'word-form-states-edit.php'])) echo 'active' ?>">
-                    Word form states
-                </a>
-            </li>
-
-            <!-- Languages -->
-            <li class="nav-item">
-                <a href="/Language/Pages/languages.php" class="nav-link <?php if (isPageActive(['languages.php', 'languages-edit.php'])) echo 'active' ?>">
-                    Languages
+                <a href="../../User/Pages/users.php" class="nav-link <?php if (isPageActive(['users.php', 'users-edit.php'])) echo 'active' ?>">
+                    Users
                 </a>
             </li>
         </ul>

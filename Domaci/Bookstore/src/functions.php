@@ -60,3 +60,14 @@ function users()
 {
     return new UserRepository(DBConnection::getConnection());
 }
+
+function isPageActive($pages)
+{
+    foreach ($pages as $page) {
+        if (basename($_SERVER['PHP_SELF']) === $page) {
+            return true;
+        }
+    }
+
+    return false;
+}
